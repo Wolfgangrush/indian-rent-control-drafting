@@ -308,6 +308,8 @@ Foreign legal-AI tools cannot fill this gap. The procedural conventions are juri
 
 ## Roadmap
 
+> 🙏 **Honest note on timelines:** Solo-author OSS · ships as time permits · v0.2.0 / v0.3.0 / v0.4.0+ version-numbered targets are indicative scope, not committed dates. Open an issue if a specific feature on a specific timeline matters to your work.
+
 - [x] **v0.1.0-alpha (current)** — universal rent-control pleading skeleton + 11 case-type skills + 6-agent pipeline + privacy firewall + Verifier disciplines + 8 State exemplars (Maharashtra · Delhi · Tamil Nadu · Karnataka · West Bengal · Uttar Pradesh · Gujarat · Andhra Pradesh / Telangana)
 - [ ] **v0.1.x** — bug fixes, register polish, formatting refinements; remaining State exemplars (Kerala · Rajasthan · MP · Bihar · Odisha · Punjab · Haryana · Goa · the North-Eastern States)
 - [ ] **v0.2.0** — deeper case-type encoding: rent-escalation arbitration framework · tenancy fixation by negotiation · Maharashtra Pagdi-specific transfer-permission applications under Section 56 MRC Act 1999 · commercial-tenancy specialised pleadings · State-specific revision procedures requiring State-Act-specific authoring depth (Karnataka Section 28; UP Section 22)
