@@ -23,8 +23,41 @@ Compose the actual rent-control pleading as a complete `.docx`. Single output fi
 
 ## Outputs
 
-- `<case-folder>/draft-v1.md` — markdown intermediate
-- `<case-folder>/draft-v1.docx` — final form, generated from markdown via pandoc
+- `<case-folder>/draft-v1.md` — markdown intermediate (Drafter writes Markdown with `#` / `##` / `###` headings — see Markdown-heading discipline below)
+- `<case-folder>/draft-v1.docx` — final form, generated from markdown via pandoc using the shipped reference.docx at `${CLAUDE_PLUGIN_ROOT}/skills/_rent_control_drafting_base/reference.docx`
+
+## Markdown-heading discipline (LOAD-BEARING — Drafter must follow)
+
+The shipped `reference.docx` has the Word styles locked (TNR 14pt body 1.5 line spacing 4cm-left margin, Heading 1 bold centered, Heading 2 bold centered with letter-spacing for spaced section headers, Heading 3 bold left). For the styles to apply, the Drafter MUST use Markdown headings — not plain text:
+
+| Markdown | Used for |
+|---|---|
+| `# Heading 1` | Court / Tribunal / Controller header line; case-number line; statutory opening; cover-page anchors of INDEX / SYNOPSIS / LIST OF ANNEXURES |
+| `## Heading 2` | `## F A C T S`, `## G R O U N D S`, `## P R A Y E R`, `## V E R I F I C A T I O N`, `## I N D E X`, `## S Y N O P S I S`, `## L I S T   O F   A N N E X U R E S` |
+| `### Heading 3` | Ground sub-headers; prayer sub-clause anchors; Accompanying Application titles |
+| Plain body | Facts narrative paragraphs; ground bodies; prayer clauses; verification |
+
+Tables use pandoc pipe-table syntax with colon-anchored alignment row to control column widths:
+```markdown
+| Sr.No | Annx | Particulars       | Date | Pgs |
+|:-----:|:----:|:------------------|:----:|:---:|
+```
+
+**Verbosity discipline (per `_drafting_common/SKILL.md` §Verbosity).** Target word counts:
+
+| Case type | Main pleading target | Hard ceiling |
+|---|---|---|
+| Eviction (any ground) | 3,000–4,500 words | 6,000 |
+| Standard rent fixation | 2,500–3,500 words | 4,500 |
+| Rent deposit application | 1,500–2,500 words | 3,500 |
+| Tenancy termination notice | 800–1,500 words | 2,000 |
+| Recovery suit | 3,000–4,500 words | 6,000 |
+| Tenant written statement | 2,500–4,000 words | 5,500 |
+| Revision / Appeal | 4,000–5,500 words | 7,500 |
+
+Compression rules: one paragraph per ground (not three); ceremonial phrases used sparingly; Synopsis ≤ 2 pages; if draft exceeds ceiling, compress before signalling Verifier.
+
+**Cover-page discipline.** INDEX, SYNOPSIS, LIST OF ANNEXURES each begin on a new page (`\newpage`) and carry ONLY: forum header (`#`) + case-number line (`#`) + short cause-title (Petitioner short name `VERSUS` Respondent short name) + section header (`##`) + content + Counsel block. DO NOT repeat the full party address block on cover pages.
 
 ## Behaviour — universal Indian rent-control pleading structure
 
@@ -76,3 +109,17 @@ Per *V. Dhanapal Chettiar v. Yesodai Ammal* (1979) 4 SCC 214 — where the State
 - States where the State Act notice substitutes for Section 106 TPA: Tamil Nadu (for some grounds), Karnataka, Delhi (for some grounds), AP / Telangana, UP (where the release application is the procedure)
 
 Where uncertain, the Drafter incorporates BOTH the Section 106 TPA notice paragraph AND the State Act notice paragraph (over-pleading is safer than under-pleading at the drafting stage), and flags the choice for the Refiner.
+
+## .docx production
+
+```bash
+pandoc draft-v1.md -o draft-v1.docx \
+  --reference-doc="${CLAUDE_PLUGIN_ROOT}/skills/_rent_control_drafting_base/reference.docx" \
+  --from=markdown+pipe_tables+raw_tex
+```
+
+Use the SHIPPED reference.docx. NEVER auto-generate a fresh reference.docx in the case-folder output directory — that produces the v0.1.0 render defects (title not bold, section headers left-aligned, table columns wrapping). If the advocate has supplied a `<case-folder>/reference.docx` override (e.g., for a different State Rent Authority with different formatting), use the case-folder override.
+
+## Handoff
+
+When `draft-v1.docx` is written, the Drafter's job is complete. The downstream Verifier / Refiner / Overseer stages are **OPTIONAL** QC layers (see `_drafting_common/SKILL.md` §Pipeline-optionality). Default exit point is here, after Drafter. The advocate decides whether to invoke the QC stages.
