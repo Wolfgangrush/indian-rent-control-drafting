@@ -170,3 +170,55 @@ The Indian Evidence Act 1872 is now replaced by the Bharatiya Sakshya Adhiniyam 
 - Section 65 BSA replaces Section 67 IEA (proof of execution by attesting witness)
 
 Pleadings filed after 01 July 2024 cite BSA section numbers (with parenthetical IEA reference for the transition period). Citations in pleadings drawn before the transition retain IEA section numbers. The Drafter applies the rule from `case-config.md` `filing_date` field.
+
+## OUTPUT FORMAT — pandoc + shipped reference.docx
+
+The Drafter writes a Markdown intermediate (`draft-v1.md`) and converts to `.docx` via pandoc using the shipped reference.docx at `${CLAUDE_PLUGIN_ROOT}/skills/_rent_control_drafting_base/reference.docx` — pre-customised with locked Word styles (TNR 14pt body 1.5 line spacing 4cm-left margin, Heading 1 bold centered, Heading 2 bold centered with letter-spacing for the spaced `F A C T S` effect, Heading 3 bold left, fixed table layout).
+
+```bash
+pandoc draft-v1.md -o draft-v1.docx \
+  --reference-doc="${CLAUDE_PLUGIN_ROOT}/skills/_rent_control_drafting_base/reference.docx" \
+  --from=markdown+pipe_tables+raw_tex
+```
+
+The Drafter MUST use the shipped reference.docx or a per-case override. NEVER auto-generate a fresh one (that produces v0.1.0 render defects — title not bold, section headers left-aligned, tables wrapping). Filename convention: `<case-type>_draft-v<N>_<YYYY-MM-DD>.docx`. Never overwrite an existing draft.
+
+## PIPELINE-OPTIONALITY (load-bearing — advocate-cost discipline)
+
+The full 6-agent pipeline (Reader → Format → Drafter → Verifier → Refiner → Overseer) is **NOT** mandatory. As of v0.2.0-alpha, only the first three stages are required to produce a filing-grade draft. The remaining three are OPTIONAL QC layers the advocate explicitly invokes.
+
+```
+┌────────────────────────────────────────────────────────────┐
+│  REQUIRED (default exit point)                              │
+│  Stage 1  Reader   →  case-facts.md                         │
+│  Stage 2  Format   →  format-shell.md                       │
+│  Stage 3  Drafter  →  draft-v1.docx   (filing-grade)        │
+│  ── default exit ──                                         │
+│  OPTIONAL QC (advocate opts in)                             │
+│  Stage 4  Verifier  →  verification-report.md               │
+│  Stage 5  Refiner   →  draft-v2.docx                        │
+│  Stage 6  Overseer  →  final-draft.docx + opposing-notes.md │
+└────────────────────────────────────────────────────────────┘
+```
+
+Each stage is itself a Claude subagent run (~80–120K tokens). Running all six on every draft can exhaust the advocate's Claude session limit. The QC stages are valuable for contested eviction matters with significant pecuniary stakes, but disproportionate for routine tenancy-termination notices and rent-deposit applications.
+
+## VERBOSITY DISCIPLINE
+
+| Case type | Main pleading target | Hard ceiling |
+|---|---|---|
+| Eviction (any ground) | 3,000–4,500 words | 6,000 |
+| Standard rent fixation | 2,500–3,500 words | 4,500 |
+| Rent deposit application | 1,500–2,500 words | 3,500 |
+| Tenancy termination notice | 800–1,500 words | 2,000 |
+| Recovery suit | 3,000–4,500 words | 6,000 |
+| Tenant written statement | 2,500–4,000 words | 5,500 |
+| Revision / Appeal | 4,000–5,500 words | 7,500 |
+
+Compression rules: one paragraph per ground (not three); ceremonial phrases used sparingly; Synopsis ≤ 2 pages; if draft exceeds ceiling, compress before signalling Verifier.
+
+## MARKDOWN HEADING DISCIPLINE
+
+Drafter writes Markdown using `# Heading 1` for forum header / case-number / cover-page anchors, `## Heading 2` for section headers (`## F A C T S`, `## G R O U N D S`, `## P R A Y E R`, `## V E R I F I C A T I O N`, `## I N D E X`, `## S Y N O P S I S`, `## L I S T   O F   A N N E X U R E S`), `### Heading 3` for ground sub-headers and Accompanying Application titles. Pandoc maps the headings to the locked Word styles in `_rent_control_drafting_base/reference.docx`. The rendered .docx shows them as bold-centered-spaced section titles, not as `##` characters.
+
+Cover-page discipline: INDEX, SYNOPSIS, LIST OF ANNEXURES each begin on `\newpage` and carry ONLY forum header + case-number + short cause-title + section header + content + counsel block. Full party address block stays on the Main Petition cover only.

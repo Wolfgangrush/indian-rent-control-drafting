@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ---
 
+## [0.2.0-alpha] — 2026-05-24
+
+### Critical render-defect repair + pipeline-optionality
+
+This release inherits the v0.2.0-alpha fixes from `indian-hc-drafting-litigation` and adapts them to the rent-control pipeline. The v0.1.0 render path produced filing-grade Markdown but the pandoc → `.docx` conversion failed Rent Controller / Court of Small Causes / Rent Authority Registry expectations on multiple counts.
+
+### Added
+
+- **Pre-customised rent-control `reference.docx`** at `skills/_rent_control_drafting_base/reference.docx` with locked Word styles (TNR 14pt body, 1.5 line spacing, 4cm left / 2.5cm right-top-bottom margins, Heading 1 bold centered, Heading 2 bold centered with letter-spacing for the spaced `F A C T S` effect, Heading 3 bold left, fixed table layout).
+- **`build_reference_docx.py`** — reproducible build script for the shipped reference.docx.
+- **MARKDOWN HEADING DISCIPLINE** section in `_drafting_common/SKILL.md` and `agents/drafter/drafter.md` documenting the Markdown → Word-style mapping the Drafter must follow.
+- **VERBOSITY DISCIPLINE** in `_drafting_common/SKILL.md` setting per-case-type word-count targets (Eviction 3,000–4,500 / ceiling 6,000; Standard Rent Fixation 2,500–3,500 / 4,500; Rent Deposit Application 1,500–2,500 / 3,500; Tenancy Termination Notice 800–1,500 / 2,000; Recovery Suit 3,000–4,500 / 6,000; Tenant Written Statement 2,500–4,000 / 5,500; Revision/Appeal 4,000–5,500 / 7,500).
+- **PIPELINE-OPTIONALITY** section in `_drafting_common/SKILL.md` — Verifier / Refiner / Overseer now OPTIONAL QC layers. Default exit point is after Stage 3 (Drafter); the advocate decides whether to invoke the QC stages.
+- **COVER-PAGE DISCIPLINE** — INDEX, SYNOPSIS, LIST OF ANNEXURES each begin on `\newpage` and carry ONLY forum header + case-number + short cause-title + section header + content + counsel block.
+
+### Changed
+
+- **Drafter agent prompt** extended with the Markdown-heading discipline, verbosity ceilings, cover-page discipline, and pandoc invocation against the shipped reference.docx.
+- **Pandoc invocation documented end-to-end.** The Drafter MUST use the shipped reference.docx; auto-generating one in the case folder is now banned (it was the v0.1.0 defect source).
+
+### Cost / token-budget note
+
+Running the full 6-agent pipeline burns approximately 600K tokens per draft, which can exhaust an advocate's Claude session limit. v0.2.0 makes Stages 4–6 OPTIONAL so a baseline Reader → Format → Drafter run (~280K tokens) is sufficient for routine pleadings (rent deposit applications, tenancy termination notices). The optional QC stages remain available for contested eviction matters and standard-rent fixations with significant pecuniary impact.
+
+---
+
 ## [0.1.0-alpha] — 2026-05-17 (initial release)
 
 ### Added
