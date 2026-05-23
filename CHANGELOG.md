@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ---
 
+## [0.2.1-alpha] — 2026-05-24
+
+### Filing-grade format calibration
+
+Inherits the v0.2.1 calibration from `indian-hc-drafting-litigation` (anchored to an actual filed Bombay HC Nagpur Second Appeal pleading) and applies it to the rent-control pipeline.
+
+### Added
+
+- **`fix_docx_tables.py`** post-pandoc script at `skills/_rent_control_drafting_base/fix_docx_tables.py`. Forces column widths on every table in the rendered .docx — 5-col (Sr.No / Annx / Particulars / Date / Pgs) = 8/8/60/14/10; 4-col = 10/10/65/15; 3-col = 10/75/15; 2-col (Synopsis Dates–Events / Rent-history columns) = 18/82. Locks first-row bold + centered. Drafter runs this as the final post-pandoc step.
+- **Heading 2 with UNDERLINE** in reference.docx for spaced section headers (`F A C T S`, `G R O U N D S`, `P R A Y E R`, `V E R I F I C A T I O N`, etc.).
+- **Heading 3 + Heading 4 styles** in reference.docx for unspaced bold-underlined section headers and left-anchored bold-underlined headings.
+
+### Changed
+
+- **Drafter pandoc command** is now TWO steps (pandoc → .docx, then `fix_docx_tables.py`). Step 2 is non-negotiable; skipping it produces stacking-column table defects.
+- **reference.docx Heading 2 style** now includes UNDERLINE.
+
+---
+
 ## [0.2.0-alpha] — 2026-05-24
 
 ### Critical render-defect repair + pipeline-optionality

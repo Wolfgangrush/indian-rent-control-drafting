@@ -110,15 +110,21 @@ Per *V. Dhanapal Chettiar v. Yesodai Ammal* (1979) 4 SCC 214 — where the State
 
 Where uncertain, the Drafter incorporates BOTH the Section 106 TPA notice paragraph AND the State Act notice paragraph (over-pleading is safer than under-pleading at the drafting stage), and flags the choice for the Refiner.
 
-## .docx production
+## .docx production (two-step process — Step 2 is NON-NEGOTIABLE)
 
 ```bash
+# Step 1 — pandoc → .docx with locked Word styles
 pandoc draft-v1.md -o draft-v1.docx \
   --reference-doc="${CLAUDE_PLUGIN_ROOT}/skills/_rent_control_drafting_base/reference.docx" \
   --from=markdown+pipe_tables+raw_tex
+
+# Step 2 — force table column widths (Index / List of Annexures / Synopsis tables)
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/_rent_control_drafting_base/fix_docx_tables.py" draft-v1.docx
 ```
 
-Use the SHIPPED reference.docx. NEVER auto-generate a fresh reference.docx in the case-folder output directory — that produces the v0.1.0 render defects (title not bold, section headers left-aligned, table columns wrapping). If the advocate has supplied a `<case-folder>/reference.docx` override (e.g., for a different State Rent Authority with different formatting), use the case-folder override.
+Use the SHIPPED reference.docx. NEVER auto-generate a fresh reference.docx in the case-folder output directory — that produces the v0.1.0 render defects (title not bold, section headers left-aligned, table columns wrapping). The fix_docx_tables.py post-pandoc script forces column widths on every table (5-col Index/LoA = 8/8/60/14/10; 4-col = 10/10/65/15; 3-col = 10/75/15; 2-col Synopsis Dates-Events = 18/82). Pandoc pipe-tables do not reliably honour `tblLayout=fixed`; skipping the fix script reproduces the v0.2.0 Index-table defect (Sr.No / Annx columns stacking vertically).
+
+If the advocate has supplied a `<case-folder>/reference.docx` override (e.g., for a different State Rent Authority with different formatting), use the case-folder override. The fix script runs regardless.
 
 ## Handoff
 
