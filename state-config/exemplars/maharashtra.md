@@ -2,7 +2,7 @@
 
 ## Applicable State Rent Control Act
 - **Act:** Maharashtra Rent Control Act 1999 (Act No. XVIII of 2000)
-- **Scope:** Applicable to premises let for residence, education, business, trade, storage, etc., in areas to which the Act extends (notified Greater Mumbai, Pune, Nagpur and other urban areas)
+- **Scope:** Applicable to premises let for residence, education, business, trade, storage, etc., in areas to which the Act extends (notified Greater Mumbai, Pune, [bench city] and other urban areas)
 - **Replaces:** Bombay Rents, Hotel and Lodging House Rates Control Act 1947 (in Maharashtra)
 
 ## Forum nomenclature

@@ -10,7 +10,7 @@
 >
 > This software generates assistive drafts and suggestions only. Every legal claim, citation, statute reference, procedural step, deadline calculation, and ground of relief must be independently verified by a qualified human practitioner before filing, advising a client, or relying on the output. The publisher accepts no liability for outputs used without verification.
 
-> 🛡️ **Privacy primitive — Reader agent invokes the gateway:** This drafting plugin's **Reader agent** (the first agent in the 6-agent pipeline) calls [pseudonymisation-gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) (MIT · Wolfgang Rush) on the user's case folder BEFORE any cloud-LLM call. Real client names · government IDs · case numbers · phone numbers · currency amounts are replaced with placeholders (`[PERSON_1]` · `[AADHAAR_1]` · `[CASE_NO_1]` · etc.) in a session-scoped in-memory token map that never touches disk. Downstream agents (Format · Drafter · Verifier · Refiner) work entirely on the sanitized text. The **Overseer agent** (the final agent) calls `desanitize()` to restore real values in the final pleading before it reaches the file system. Cloud LLM vendors never see your client's real PII.
+> 🛡️ **Privacy primitive — Reader agent invokes the gateway:** This drafting plugin's **Reader agent** (the first agent in the 6-agent pipeline) calls [pseudonymisation-gateway](https://github.com/Wolfgangrush/pseudonymisation-gateway) (MIT · wolfgang_rush) on the user's case folder BEFORE any cloud-LLM call. Real client names · government IDs · case numbers · phone numbers · currency amounts are replaced with placeholders (`[PERSON_1]` · `[AADHAAR_1]` · `[CASE_NO_1]` · etc.) in a session-scoped in-memory token map that never touches disk. Downstream agents (Format · Drafter · Verifier · Refiner) work entirely on the sanitized text. The **Overseer agent** (the final agent) calls `desanitize()` to restore real values in the final pleading before it reaches the file system. Cloud LLM vendors never see your client's real PII.
 
 
 ---
@@ -132,7 +132,7 @@ This is a Claude-compatible plugin in the Anthropic plugin format. It runs insid
 
 Download the release `.zip` from the **Releases tab** of this repository, then in the Claude Desktop app: **Settings** → **Plugins** → **Upload local plugin** → drag the `.zip` into the upload box.
 
-### Option 2 — Claude Code (CLI) — via the Wolfgang Rush marketplace
+### Option 2 — Claude Code (CLI) — via the wolfgang_rush marketplace
 
 ```
 /plugin marketplace add Wolfgangrush/wolfgang-rush-marketplace
@@ -280,7 +280,7 @@ The MIT licence is the most permissive widely-recognised open-source licence. Th
 
 ## Sibling plugins
 
-This plugin is the fourteenth in the **Wolfgang Rush** family of Indian legal-drafting plugins. All siblings ship under the same six-agent pipeline (Reader → Format → Drafter → Verifier → Refiner → Overseer) and the family-of-plugins doctrine — each plugin narrowly scoped to one practice area / forum:
+This plugin is the fourteenth in the **wolfgang_rush** family of Indian legal-drafting plugins. All siblings ship under the same six-agent pipeline (Reader → Format → Drafter → Verifier → Refiner → Overseer) and the family-of-plugins doctrine — each plugin narrowly scoped to one practice area / forum:
 
 | Plugin | GitHub repo | Scope |
 |---|---|---|
@@ -344,7 +344,7 @@ GitHub: <https://github.com/Wolfgangrush>
 
 ## Author and brand
 
-The author is **Rushikesh R. Mahajan**, Advocate, practising before the Bombay High Court, Nagpur Bench. The plugin is published under the open-source brand **Wolfgang Rush**, which is the author's publishing handle for legal-technology infrastructure. Personal accountability under the Advocates Act 1961 attaches to the author regardless of the use of a publishing handle.
+The author is **Rushikesh R. Mahajan**, Advocate, practising before the High Courts of India. The plugin is published under the open-source brand **wolfgang_rush**, which is the author's publishing handle for legal-technology infrastructure. Personal accountability under the Advocates Act 1961 attaches to the author regardless of the use of a publishing handle.
 
 ---
 
