@@ -1,3 +1,17 @@
+<div align="center">
+<img src="docs/banner.png" width="820"/>
+
+**One plugin to draft rent-control litigation across every major State Rent Control regime in India — 6-agent pipeline, 11 case-types, 8 state exemplars.**
+
+Visit the live site: [wolfgangrush.github.io](https://wolfgangrush.github.io)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-8A2BE2)](https://claude.ai)
+[![wolfgang_rush](https://img.shields.io/badge/wolfgang__rush-14-1a1a2e)](https://github.com/Wolfgangrush)
+
+</div>
+
+
 # indian-rent-control-drafting
 
 > **Open-source Claude-compatible plugin for drafting Indian rent-control / landlord-tenant litigation pleadings across all major State Rent Control regimes — the rent-control litigation side that complements `indian-property-drafting`'s conveyancing focus and `indian-contracts-drafting`'s commercial-tenancy-agreement focus.**
